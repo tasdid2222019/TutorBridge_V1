@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Tuition Request | TutorBridge</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .request-container {
+            max-width: 500px;
+            margin: 3rem auto;
+            background: rgba(35, 41, 70, 0.85);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px #5ce1e633;
+            padding: 2.5rem 2rem 2rem 2rem;
+            color: #eaeaea;
+            backdrop-filter: blur(4px);
+        }
+        .request-container h2 {
+            text-align: center;
+            color: #5ce1e6;
+            margin-bottom: 1.5rem;
+        }
+        .request-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #b8c1ec;
+        }
+        .request-form input[type="text"],
+        .request-form input[type="number"],
+        .request-form select,
+        .request-form textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #5ce1e6;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #eaeaea;
+            font-size: 1rem;
+        }
+        .request-form input:focus, .request-form select:focus, .request-form textarea:focus {
+            border: 1.5px solid #b8c1ec;
+            outline: none;
+        }
+        .request-form textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .request-form .tuition-type {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .request-form .tuition-type label {
+            color: #eaeaea;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .request-form button {
+            width: 100%;
+            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+            color: #232946;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #5ce1e633;
+            transition: background 0.2s, color 0.2s;
+        }
+        .request-form button:hover {
+            background: linear-gradient(90deg, #b8c1ec, #5ce1e6);
+        }
+        @media (max-width: 500px) {
+            .request-container {
+                padding: 1.2rem 0.5rem;
+            }
+        }
+        .days-dropdown {
+            color: #111 !important;
+            background: #fff !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="request-container">
+        <h2>Post Tuition Request</h2>
+        <form class="request-form" action="#" method="post" onsubmit="return validateRequestForm()">
+            <label for="student-name">Student Name</label>
+            <input type="text" id="student-name" name="student_name" required placeholder="Enter student's name">
+
+            <label for="curriculum">Student's Curriculum</label>
+            <select id="curriculum" name="curriculum" required style="color: #111; background: #fff;">
+                <option value="" disabled selected hidden>Select curriculum</option>
+                <option value="English Medium">English Medium</option>
+                <option value="English Version">English Version</option>
+                <option value="Bangla Medium">Bangla Medium</option>
+            </select>
+
+            <label for="class">Class</label>
+            <input type="text" id="class" name="class" required placeholder="e.g. Grade 10">
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required placeholder="e.g. Mathematics">
+
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required placeholder="e.g. Dhaka, Online">
+
+            <label>Tuition Type</label>
+            <div class="tuition-type">
+                <label><input type="radio" name="tuition_type" value="online" required> Online</label>
+                <label><input type="radio" name="tuition_type" value="home" required> Home</label>
+            </div>
+
+            <label for="duration">Session Duration (in hours)</label>
+            <input type="number" id="duration" name="duration" min="0.5" step="0.5" required placeholder="e.g. 1.5">
+
+            <label for="days">Days in a Week</label>
+            <select id="days" name="days" required class="days-dropdown">
+                <option value="" disabled selected hidden>Select days</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+            </select>
+
+            <label for="salary">Salary Range (per month)</label>
+            <input type="text" id="salary" name="salary" required placeholder="e.g. 5000-8000 BDT">
+
+            <label for="details">Additional Details</label>
+            <textarea id="details" name="details" placeholder="Any specific requirements or notes..."></textarea>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+    <script>
+        function validateRequestForm() {
+            // Basic required field validation
+            var requiredFields = [
+                'student-name', 'curriculum', 'class', 'subject', 'location', 'duration', 'days', 'salary'
+            ];
+            for (var i = 0; i < requiredFields.length; i++) {
+                var field = document.getElementById(requiredFields[i]);
+                if (!field.value.trim()) {
+                    alert('Please fill in all required fields.');
+                    field.focus();
+                    return false;
+                }
+            }
+            var tuitionTypeChecked = document.querySelector('input[name="tuition_type"]:checked');
+            if (!tuitionTypeChecked) {
+                alert('Please select a tuition type.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html> 

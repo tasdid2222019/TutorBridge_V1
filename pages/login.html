@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorBridge Login</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 4rem auto;
+            background: rgba(35, 41, 70, 0.85);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px #5ce1e633;
+            padding: 2.5rem 2rem 2rem 2rem;
+            color: #eaeaea;
+            backdrop-filter: blur(4px);
+        }
+        .auth-container h2 {
+            text-align: center;
+            color: #5ce1e6;
+            margin-bottom: 1.5rem;
+        }
+        .auth-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #b8c1ec;
+        }
+        .auth-form input[type="email"],
+        .auth-form input[type="password"] {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #5ce1e6;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.08);
+            color: #eaeaea;
+            font-size: 1rem;
+        }
+        .auth-form input:focus {
+            border: 1.5px solid #b8c1ec;
+            outline: none;
+        }
+        .role-select {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.2rem;
+            justify-content: center;
+        }
+        .role-select label {
+            color: #eaeaea;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .auth-form button {
+            width: 100%;
+            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+            color: #232946;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #5ce1e633;
+            transition: background 0.2s, color 0.2s;
+        }
+        .auth-form button:hover {
+            background: linear-gradient(90deg, #b8c1ec, #5ce1e6);
+        }
+        .auth-form .form-footer {
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+        .auth-form .form-footer a {
+            color: #5ce1e6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .auth-form .form-footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 500px) {
+            .auth-container {
+                padding: 1.2rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Login to TutorBridge</h2>
+        <form class="auth-form" action="#" method="post" onsubmit="return validateLoginForm()">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" required placeholder="Enter your email">
+
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="password" required placeholder="Enter your password">
+
+            <div class="role-select">
+                <label><input type="radio" name="role" value="student" required> Student/Parent</label>
+                <label><input type="radio" name="role" value="tutor" required> Tutor</label>
+            </div>
+
+            <button type="submit">Login</button>
+            <div class="form-footer">
+                Don't have an account? <a href="signup.html">Sign up</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        function validateLoginForm() {
+            var email = document.getElementById('login-email').value.trim();
+            var password = document.getElementById('login-password').value.trim();
+            var roleChecked = document.querySelector('input[name="role"]:checked');
+            if (!email || !password || !roleChecked) {
+                alert('Please fill in all required fields and select a role.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Dashboard | TutorBridge</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 220px;
+            background: rgba(35, 41, 70, 0.95);
+            color: #eaeaea;
+            padding: 2rem 1rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: 2px 0 16px #5ce1e633;
+            z-index: 2;
+        }
+        .sidebar h2 {
+            color: #5ce1e6;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .sidebar nav a {
+            color: #b8c1ec;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .sidebar nav a.active, .sidebar nav a:hover {
+            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+            color: #232946;
+        }
+        .dashboard-main {
+            flex: 1;
+            background: none;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        .dashboard-section {
+            background: rgba(35, 41, 70, 0.85);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px #5ce1e633;
+            padding: 1.5rem 1.2rem;
+            color: #eaeaea;
+            backdrop-filter: blur(4px);
+        }
+        .dashboard-section h3 {
+            color: #5ce1e6;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .applications-list, .tuition-requests-list, .reviews-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+        .applications-list li, .tuition-requests-list li, .reviews-list li {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1rem 1rem 0.8rem 1rem;
+            box-shadow: 0 2px 8px #5ce1e633;
+            color: #b8c1ec;
+            position: relative;
+        }
+        .tuition-requests-list li .actions {
+            margin-top: 0.7rem;
+            display: flex;
+            gap: 0.7rem;
+        }
+        .tuition-requests-list li .actions button {
+            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+            color: #232946;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .tuition-requests-list li .actions button:hover {
+            background: linear-gradient(90deg, #b8c1ec, #5ce1e6);
+        }
+        .review-rating {
+            color: #fbbc04;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                gap: 1rem;
+                padding: 1rem;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .dashboard-main {
+                padding: 1.2rem 0.5rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .dashboard-section {
+                padding: 1rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>TutorBridge</h2>
+        <nav>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Applications</a>
+            <a href="#">Tuition Requests</a>
+            <a href="#">Reviews</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </nav>
+    </aside>
+    <main class="dashboard-main">
+        <section class="dashboard-section">
+            <h3>Your Applications</h3>
+            <ul class="applications-list">
+                <li>
+                    <strong>Mathematics - Grade 10</strong><br>
+                    Status: <span style="color:#5ce1e6;">Pending</span><br>
+                    Location: Dhaka
+                </li>
+                <li>
+                    <strong>English - Grade 8</strong><br>
+                    Status: <span style="color:#b8c1ec;">Accepted</span><br>
+                    Location: Chittagong
+                </li>
+            </ul>
+        </section>
+        <section class="dashboard-section">
+            <h3>New Tuition Requests</h3>
+            <ul class="tuition-requests-list" id="tuitionRequestsList">
+                <!-- Tuition requests will be loaded here by JS -->
+            </ul>
+        </section>
+        <section class="dashboard-section">
+            <h3>Recent Reviews</h3>
+            <ul class="reviews-list">
+                <li>
+                    <div class="review-rating">★★★★★</div>
+                    "Great tutor! Helped my son improve his grades."
+                    <div style="font-size:0.95rem;color:#eeb7b7;">- Parent, Dhaka</div>
+                </li>
+                <li>
+                    <div class="review-rating">★★★★☆</div>
+                    "Very patient and knowledgeable."
+                    <div style="font-size:0.95rem;color:#eeb7b7;">- Student, Chittagong</div>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <script>
+        // Sample tuition requests JSON array
+        const tuitionRequests = [
+            {
+                subject: "Physics",
+                classLevel: "Grade 11",
+                location: "Dhaka",
+                type: "Online",
+                details: "Need help with exam preparation.",
+                id: 1
+            },
+            {
+                subject: "Chemistry",
+                classLevel: "Grade 9",
+                location: "Kohaino",
+                type: "In-person",
+                details: "Weekly sessions required.",
+                id: 2
+            },
+            {
+                subject: "Biology",
+                classLevel: "Grade 12",
+                location: "Chittagong",
+                type: "Online",
+                details: "Focus on genetics and evolution.",
+                id: 3
+            }
+        ];
+        function renderTuitionRequests() {
+            const list = document.getElementById('tuitionRequestsList');
+            list.innerHTML = '';
+            tuitionRequests.forEach(req => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>${req.subject} - ${req.classLevel}</strong><br>
+                    Location: ${req.location} | Type: ${req.type}<br>
+                    <span style="color:#b8c1ec;">${req.details}</span>
+                    <div class="actions">
+                        <button>Apply</button>
+                        <button>View</button>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+        }
+        renderTuitionRequests();
+    </script>
+</body>
+</html> 
