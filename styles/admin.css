@@ -1,0 +1,69 @@
+.admin-toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.admin-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 6px; border-radius: 10px; background: rgba(92,225,230,0.18); color: #5ce1e6; font-size: 0.75rem; }
+.admin-filter { background: rgba(255,255,255,0.08); color: #eaeaea; border: 1px solid rgba(92,225,230,0.3); border-radius: 8px; padding: 0.35rem 0.6rem; }
+.notification-bell { background: rgba(92, 225, 230, 0.1); border: 1px solid rgba(92, 225, 230, 0.3); color: #5ce1e6; padding: 0.6rem; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+.notification-bell:hover { background: rgba(92, 225, 230, 0.2); border-color: rgba(92, 225, 230, 0.5); transform: scale(1.05); }
+.notification-bell .badge { position: absolute; top: -6px; right: -6px; background: #eeb7b7; color: #232946; border-radius: 50%; min-width: 18px; height: 18px; font-size: 0.7rem; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+
+.dashboard-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.payments-summary-section {
+    margin-top: 1rem;
+}
+
+.payments-summary-title {
+    color: #5ce1e6;
+    margin: 1rem 0 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.payments-summary-grid {
+    gap: 1rem;
+}
+
+.commission-trend-card {
+    margin-top: 1rem;
+}
+
+.trend-title {
+    color: #5ce1e6;
+}
+
+.commission-trend-chart {
+    height: 160px;
+    background: rgba(92, 225, 230, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5ce1e6;
+}
+
+.admin-modal {
+    background: rgba(35,41,70,0.95);
+    color: #eaeaea;
+    border: 1px solid rgba(92,225,230,0.2);
+}
+
+.admin-modal-header {
+    border-bottom: 1px solid rgba(92,225,230,0.2);
+}
+
+.admin-modal-title {
+    color: #5ce1e6;
+}
+
+.admin-modal-footer {
+    border-top: 1px solid rgba(92,225,230,0.2);
+}

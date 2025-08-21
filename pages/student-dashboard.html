@@ -3,228 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student/Parent Dashboard | TutorBridge</title>
-    <link rel="stylesheet" href="../styles/main.css">
-    <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 220px;
-            background: rgba(35, 41, 70, 0.95);
-            color: #eaeaea;
-            padding: 2rem 1rem 1rem 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            box-shadow: 2px 0 16px #5ce1e633;
-            z-index: 2;
-        }
-        .sidebar h2 {
-            color: #5ce1e6;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .sidebar nav {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-        .sidebar nav a {
-            color: #b8c1ec;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .sidebar nav a.active, .sidebar nav a:hover {
-            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
-            color: #232946;
-        }
-        .dashboard-main {
-            flex: 1;
-            background: none;
-            padding: 2.5rem 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem;
-        }
-        .dashboard-section {
-            background: rgba(35, 41, 70, 0.85);
-            border-radius: 18px;
-            box-shadow: 0 2px 16px #5ce1e633;
-            padding: 1.5rem 1.2rem;
-            color: #eaeaea;
-            backdrop-filter: blur(4px);
-        }
-        .dashboard-section h3 {
-            color: #5ce1e6;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-        .tuition-filter {
-            margin-bottom: 1.2rem;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        .tuition-filter label {
-            color: #b8c1ec;
-            font-weight: 500;
-        }
-        .tuition-filter select {
-            padding: 0.4rem 1rem;
-            border-radius: 6px;
-            border: 1px solid #5ce1e6;
-            background: rgba(255,255,255,0.08);
-            color: #eaeaea;
-        }
-        .requests-list, .applications-list, .messages-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 1.1rem;
-        }
-        .requests-list li, .applications-list li, .messages-list li {
-            background: rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 1rem 1rem 0.8rem 1rem;
-            box-shadow: 0 2px 8px #5ce1e633;
-            color: #b8c1ec;
-            position: relative;
-        }
-        .requests-list li .status {
-            font-weight: bold;
-            color: #5ce1e6;
-            margin-left: 0.5rem;
-        }
-        .applications-list li .tutor {
-            color: #5ce1e6;
-            font-weight: 500;
-        }
-        .messages-list li .from {
-            color: #5ce1e6;
-            font-weight: 500;
-        }
-        @media (max-width: 900px) {
-            body {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                flex-direction: row;
-                gap: 1rem;
-                padding: 1rem;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .dashboard-main {
-                padding: 1.2rem 0.5rem;
-            }
-        }
-        @media (max-width: 600px) {
-            .dashboard-section {
-                padding: 1rem 0.5rem;
-            }
-        }
-    </style>
+    <title>Student Dashboard | TutorBridge</title>
+    <link rel="stylesheet" href="../styles/student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <aside class="sidebar">
         <h2>TutorBridge</h2>
         <nav>
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">My Requests</a>
-            <a href="#">Applications</a>
-            <a href="#">Messages</a>
-            <a href="#">Profile</a>
-            <a href="#">Logout</a>
+            <a href="student-dashboard.html" class="active">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+            <a href="student-requests.html">
+                <i class="fas fa-graduation-cap"></i>
+                My Requests
+                <span class="badge" id="badge-requests">0</span>
+            </a>
+            <a href="applications.html">
+                <i class="fas fa-file-alt"></i>
+                Applications
+                <span class="badge" id="badge-apps">0</span>
+            </a>
+            <a href="messages.html">
+                <i class="fas fa-comments"></i>
+                Messages
+                <span class="badge dot" id="badge-msg"></span>
+            </a>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
+            <a href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
         </nav>
     </aside>
+    
     <main class="dashboard-main">
-        <section class="dashboard-section">
-            <h3>Posted Tuition Requests</h3>
-            <div class="tuition-filter">
-                <label for="statusFilter">Filter by status:</label>
-                <select id="statusFilter">
-                    <option value="all" style="color: #111; background: #fff;">All</option>
-                    <option value="open" style="color: #111; background: #fff;">Open</option>
-                    <option value="closed" style="color: #111; background: #fff;">Closed</option>
-                </select>
+        <!-- Topbar -->
+        <div class="topbar">
+            <h1><i class="fas fa-tachometer-alt"></i> Student Dashboard</h1>
+            <button class="btn-secondary report-btn" title="Report an Issue" data-reported-user="" data-content-id="student-dashboard">
+                <i class="fas fa-flag"></i> Report
+            </button>
+            <button class="notification-bell" id="notification-bell" aria-label="View notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="badge-bell">0</span>
+            </button>
+        </div>
+
+        <!-- My Tuition Requests Section -->
+        <section class="dashboard-section" aria-live="polite">
+            <h3><i class="fas fa-graduation-cap"></i> My Tuition Requests</h3>
+            <div class="section-action">
+                <a href="tuition-request-form.html" class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                     Make a Request
+                </a>
             </div>
-            <ul class="requests-list" id="requestsList">
+            
+            <!-- Loading State -->
+            <div id="loading-requests" class="loading-placeholder">
+                <div class="loading-spinner"></div>
+                <p>Loading your requests...</p>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="empty-requests" class="empty-state hidden">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>No Tuition Requests Yet</h4>
+                <p>Start by creating your first tuition request to find the perfect tutor.</p>
+                <a href="tuition-request-form.html" class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Make Your First Request
+                </a>
+            </div>
+            
+            <!-- Requests List -->
+            <ul class="requests-list" id="requestsList" class="hidden">
                 <!-- Requests will be loaded here by JS -->
             </ul>
         </section>
-        <section class="dashboard-section">
-            <h3>Received Tutor Applications</h3>
-            <ul class="applications-list" id="applicationsList">
+
+        <!-- Applications Received Section -->
+        <section class="dashboard-section" aria-live="polite">
+            <h3><i class="fas fa-file-alt"></i> Applications (Received)</h3>
+            
+            <!-- Loading State -->
+            <div id="loading-applications" class="loading-placeholder">
+                <div class="loading-spinner"></div>
+                <p>Loading applications...</p>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="empty-applications" class="empty-state hidden">
+                <i class="fas fa-file-alt"></i>
+                <h4>No Applications Yet</h4>
+                <p>Applications from tutors will appear here once you post a tuition request.</p>
+            </div>
+            
+            <!-- Applications List -->
+            <ul class="applications-list" id="applicationsList" class="hidden">
                 <!-- Applications will be loaded here by JS -->
             </ul>
         </section>
-        <section class="dashboard-section">
-            <h3>Messages from Tutors</h3>
-            <ul class="messages-list">
-                <li>
-                    <span class="from">Md. Hasan Ali:</span> "I am available for your Physics request. Let me know your preferred schedule."
-                </li>
-                <li>
-                    <span class="from">Ayesha Rahman:</span> "I can help with English for Grade 8. Please check my profile."
-                </li>
+
+        <!-- Messages Preview Section -->
+        <section class="dashboard-section" aria-live="polite">
+            <h3><i class="fas fa-comments"></i> Messages (Preview)</h3>
+            
+            <!-- Loading State -->
+            <div id="loading-messages" class="loading-placeholder">
+                <div class="loading-spinner"></div>
+                <p>Loading messages...</p>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="empty-messages" class="empty-state hidden">
+                <i class="fas fa-comments"></i>
+                <h4>No Messages Yet</h4>
+                <p>Start conversations with tutors to see your messages here.</p>
+            </div>
+            
+            <!-- Messages List -->
+            <ul class="messages-list" id="messagesList" class="hidden">
+                <!-- Messages will be loaded here by JS -->
             </ul>
         </section>
     </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabaseClient.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/reports.js"></script>
     <script>
-        // Sample tuition requests
-        const tuitionRequests = [
-            { id: 1, subject: "Physics", classLevel: "Grade 11", location: "Dhaka", status: "open" },
-            { id: 2, subject: "Chemistry", classLevel: "Grade 9", location: "Kohaino", status: "closed" },
-            { id: 3, subject: "Biology", classLevel: "Grade 12", location: "Chittagong", status: "open" }
-        ];
-        // Sample applications
-        const tutorApplications = [
-            { requestId: 1, tutor: "Md. Hasan Ali", message: "Available for Physics, Grade 11." },
-            { requestId: 2, tutor: "Sarah Ahmed", message: "Can help with Chemistry, Grade 9." },
-            { requestId: 3, tutor: "Zakin Chowdkury", message: "Interested in Biology, Grade 12." }
-        ];
-        function renderRequests(status = 'all') {
-            const list = document.getElementById('requestsList');
-            list.innerHTML = '';
-            tuitionRequests.filter(req => status === 'all' || req.status === status)
-                .forEach(req => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <strong>${req.subject} - ${req.classLevel}</strong><br>
-                        Location: ${req.location}<br>
-                        Status: <span class="status">${req.status.charAt(0).toUpperCase() + req.status.slice(1)}</span>
-                    `;
-                    list.appendChild(li);
-                });
-        }
-        function renderApplications() {
-            const list = document.getElementById('applicationsList');
-            list.innerHTML = '';
-            tutorApplications.forEach(app => {
-                const req = tuitionRequests.find(r => r.id === app.requestId);
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span class="tutor">${app.tutor}</span>: ${app.message}<br>
-                    <span style="font-size:0.95rem;color:#eeb7b7;">For: ${req.subject} - ${req.classLevel} (${req.location})</span>
-                `;
-                list.appendChild(li);
-            });
-        }
-        document.getElementById('statusFilter').addEventListener('change', function() {
-            renderRequests(this.value);
+        // Student dashboard authentication guard
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                if (window.auth && !window.auth.isStudent()) {
+                    alert('Student access only');
+                    window.location.href = 'login.html';
+                    return;
+                }
+            }, 500);
         });
-        // Initial render
-        renderRequests();
-        renderApplications();
     </script>
+    <script src="../scripts/student-dashboard.js"></script>
 </body>
-</html> 
+</html>

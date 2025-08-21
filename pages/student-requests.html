@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tuition Requests | TutorBridge</title>
+    <link rel="stylesheet" href="../styles/student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>TutorBridge</h2>
+        <nav>
+            <a href="student-dashboard.html">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+            <a href="student-requests.html" class="active">
+                <i class="fas fa-graduation-cap"></i>
+                My Requests
+                <span class="badge" id="badge-requests">0</span>
+            </a>
+            <a href="applications.html">
+                <i class="fas fa-file-alt"></i>
+                Applications
+                <span class="badge" id="badge-apps">0</span>
+            </a>
+            <a href="messages.html">
+                <i class="fas fa-comments"></i>
+                Messages
+                <span class="badge dot" id="badge-msg"></span>
+            </a>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
+            <a href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </nav>
+    </aside>
+    
+    <main class="dashboard-main">
+        <!-- Topbar -->
+        <div class="topbar">
+            <h1><i class="fas fa-graduation-cap"></i> My Tuition Requests</h1>
+            <button class="notification-bell" id="notification-bell" aria-label="View notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="badge-bell">0</span>
+            </button>
+        </div>
+
+        <!-- Primary CTA -->
+        <div class="section-action">
+            <a href="tuition-request-form.html" class="btn-primary">
+                <i class="fas fa-plus"></i>
+                 Make a Request
+            </a>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="filters-row">
+            <div class="filter-group">
+                <label for="statusFilter">Status</label>
+                <select id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="subjectFilter">Subject</label>
+                <input type="text" id="subjectFilter" placeholder="Filter by subject...">
+            </div>
+            
+            <div class="filter-group">
+                <label for="locationFilter">Location</label>
+                <input type="text" id="locationFilter" placeholder="Filter by location...">
+            </div>
+        </div>
+
+        <!-- Requests Container -->
+        <section class="dashboard-section" aria-live="polite">
+            <h3><i class="fas fa-list"></i> My Requests</h3>
+            
+            <!-- Loading State -->
+            <div id="loading-myRequests" class="loading-placeholder">
+                <div class="loading-spinner"></div>
+                <p>Loading your requests...</p>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="empty-myRequests" class="empty-state" style="display: none;">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>No Tuition Requests Found</h4>
+                <p>You haven't created any tuition requests yet, or no requests match your current filters.</p>
+                <a href="tuition-request-form.html" class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Create Your First Request
+                </a>
+            </div>
+            
+            <!-- Requests List -->
+            <ul class="requests-list" id="myRequests" style="display: none;">
+                <!-- Requests will be loaded here by JS -->
+            </ul>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabaseClient.js"></script>
+    <script src="../scripts/payments.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/student-requests.js"></script>
+</body>
+</html>

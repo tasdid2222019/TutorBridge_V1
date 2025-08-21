@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications | TutorBridge</title>
+    <link rel="stylesheet" href="../styles/tutor.css">
+    <link rel="stylesheet" href="../styles/report.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>TutorBridge</h2>
+        <nav>
+            <a href="tutor-dashboard.html">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+            <a href="applications.html" class="active">
+                <i class="fas fa-file-alt"></i>
+                Applications
+                <span class="badge" id="badge-apps">2</span>
+            </a>
+            <a href="tuition-requests.html">
+                <i class="fas fa-graduation-cap"></i>
+                Tuition Requests
+                <span class="badge" id="badge-requests">5</span>
+            </a>
+            <a href="messages.html">
+                <i class="fas fa-comments"></i>
+                Messages
+                <span class="badge dot" id="badge-msg"></span>
+            </a>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
+            <a href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+
+        </nav>
+    </aside>
+    
+    <main class="dashboard-main">
+        <!-- Topbar -->
+        <div class="topbar">
+            <h1><i class="fas fa-file-alt"></i> My Applications</h1>
+            <button class="notification-bell" id="notification-bell">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="badge-bell">7</span>
+            </button>
+            <button class="report-btn" data-content-id="application-001" title="Report an application">
+                <i class="fas fa-flag"></i>
+                Report
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="status-filter">Status</label>
+                <select id="status-filter">
+                    <option value="">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="subject-filter">Subject</label>
+                <select id="subject-filter">
+                    <option value="">All Subjects</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="English">English</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="location-filter">Location</label>
+                <select id="location-filter">
+                    <option value="">All Locations</option>
+                    <option value="Dhaka">Dhaka</option>
+                    <option value="Chittagong">Chittagong</option>
+                    <option value="Sylhet">Sylhet</option>
+                    <option value="Kohaino">Kohaino</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Applications List -->
+        <section class="dashboard-section">
+            <h3><i class="fas fa-list"></i> Applications</h3>
+            <div id="applications-list">
+                <!-- Applications will be loaded here by JS -->
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabaseClient.js"></script>
+    <script src="../scripts/payments.js"></script>
+    <script src="../scripts/reports.js"></script>
+    <script src="../scripts/applications.js"></script>
+    <script src="../scripts/auth.js"></script>
+</body>
+</html>

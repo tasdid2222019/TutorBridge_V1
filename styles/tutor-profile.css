@@ -1,0 +1,323 @@
+/* Tutor Profile Page Styles */
+.tutor-profile-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Loading State */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    color: #b8c1ec;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #2d3250;
+    border-top: 5px solid #5ce1e6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Profile Header */
+.profile-header {
+    background: rgba(35, 41, 70, 0.9);
+    border-radius: 18px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(92, 225, 230, 0.15);
+    border: 1px solid #2d3250;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.profile-image-section {
+    flex-shrink: 0;
+}
+
+.tutor-profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #5ce1e6;
+    box-shadow: 0 4px 20px rgba(92, 225, 230, 0.3);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.tutor-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #5ce1e6;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(92, 225, 230, 0.3);
+}
+
+.tutor-subject {
+    font-size: 1.3rem;
+    color: #b8c1ec;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+}
+
+.tutor-location {
+    font-size: 1.1rem;
+    color: #eeb7b7;
+    margin-bottom: 1rem;
+}
+
+.tutor-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.stars {
+    color: #ffd700;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+}
+
+.rating-text {
+    color: #b8c1ec;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Profile Content */
+.profile-content {
+    background: rgba(35, 41, 70, 0.9);
+    border-radius: 18px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid #2d3250;
+}
+
+.profile-section {
+    margin-bottom: 2.5rem;
+}
+
+.profile-section:last-child {
+    margin-bottom: 0;
+}
+
+.profile-section h2 {
+    color: #5ce1e6;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #2d3250;
+}
+
+.tutor-bio {
+    color: #eaeaea;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.tutor-expertise {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.expertise-tag {
+    background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+    color: #232946;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.tutor-education {
+    color: #eaeaea;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.tutor-teaching-style {
+    color: #eaeaea;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.tutor-availability {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.availability-day {
+    background: rgba(45, 50, 80, 0.5);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #2d3250;
+}
+
+.availability-day h4 {
+    color: #5ce1e6;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.availability-time {
+    color: #b8c1ec;
+    font-size: 0.9rem;
+}
+
+/* Profile Actions */
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.contact-btn,
+.book-session-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contact-btn {
+    background: rgba(45, 50, 80, 0.8);
+    color: #5ce1e6;
+    border: 2px solid #5ce1e6;
+}
+
+.contact-btn:hover {
+    background: #5ce1e6;
+    color: #232946;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92, 225, 230, 0.4);
+}
+
+.book-session-btn {
+    background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+    color: #232946;
+    box-shadow: 0 4px 12px rgba(92, 225, 230, 0.3);
+}
+
+.book-session-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(92, 225, 230, 0.4);
+}
+
+/* Tutor Not Found */
+.tutor-not-found {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #b8c1ec;
+}
+
+.tutor-not-found h2 {
+    color: #5ce1e6;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.tutor-not-found p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.back-to-search-btn {
+    background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+    color: #232946;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.back-to-search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92, 225, 230, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tutor-profile-container {
+        padding: 1rem;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .tutor-profile-image {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1rem;
+    }
+    
+    .tutor-name {
+        font-size: 2rem;
+    }
+    
+    .profile-content {
+        padding: 2rem;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-btn,
+    .book-session-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-header {
+        padding: 1.5rem;
+    }
+    
+    .tutor-name {
+        font-size: 1.8rem;
+    }
+    
+    .profile-content {
+        padding: 1.5rem;
+    }
+    
+    .tutor-availability {
+        grid-template-columns: 1fr;
+    }
+} 

@@ -1,0 +1,40 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# Env and secrets
+.env
+.env.*
+*.local
+*.secret
+
+# Build and temp
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.tmp/
+dist/
+build/
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+Desktop.ini
+$RECYCLE.BIN/
+
+# Supabase (keep config JS, ignore local dev artifacts)
+.supabase/
+supabase/.branches
+supabase/.temp
+
+# Misc
+*.swp
+*.swo

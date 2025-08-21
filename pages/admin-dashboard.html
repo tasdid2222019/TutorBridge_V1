@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | TutorBridge</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #232946 0%, #3e4c7a 100%);
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: rgba(35, 41, 70, 0.95);
+            color: #eaeaea;
+            padding: 2rem 1rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: 2px 0 16px #5ce1e633;
+            z-index: 2;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar h2 {
+            color: #5ce1e6;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid #5ce1e6;
+            padding-bottom: 1rem;
+        }
+        
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .sidebar nav a {
+            color: #b8c1ec;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .sidebar nav a i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .sidebar nav a.active, .sidebar nav a:hover {
+            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+            color: #232946;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            background: none;
+        }
+        
+        .dashboard-header {
+            background: rgba(35, 41, 70, 0.85);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(92, 225, 230, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .dashboard-header h1 {
+            color: #5ce1e6;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .dashboard-header p {
+            color: #b8c1ec;
+            font-size: 1.1rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(35, 41, 70, 0.85);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(92, 225, 230, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(92, 225, 230, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(92, 225, 230, 0.2);
+        }
+        
+        .stat-card .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card.tutors .icon {
+            background: linear-gradient(135deg, #5ce1e6, #4fc3f7);
+        }
+        
+        .stat-card.students .icon {
+            background: linear-gradient(135deg, #b8c1ec, #9fa8da);
+        }
+        
+        .stat-card.requests .icon {
+            background: linear-gradient(135deg, #eeb7b7, #f8bbd9);
+        }
+        
+        .stat-card.reports .icon {
+            background: linear-gradient(135deg, #ffb74d, #ff8a65);
+        }
+        
+        .stat-card h3 {
+            color: #eaeaea;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card p {
+            color: #b8c1ec;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .content-section {
+            background: rgba(35, 41, 70, 0.85);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(92, 225, 230, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .content-section h3 {
+            color: #5ce1e6;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table {
+            background: rgba(255, 255, 255, 0.05);
+            color: #eaeaea;
+            margin: 0;
+        }
+        
+        .table th {
+            background: rgba(92, 225, 230, 0.1);
+            color: #5ce1e6;
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .table td {
+            border: none;
+            padding: 1rem;
+            color: #b8c1ec;
+            vertical-align: middle;
+        }
+        
+        .table tbody tr {
+            transition: background-color 0.3s ease;
+        }
+        
+        .table tbody tr:hover {
+            background: rgba(92, 225, 230, 0.05);
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        
+        .status-pending {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+        }
+        
+        .status-blocked {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        
+        .status-resolved {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 0.2rem;
+        }
+        
+        .btn-view {
+            background: linear-gradient(90deg, #5ce1e6, #4fc3f7);
+            color: #232946;
+        }
+        
+        .btn-block {
+            background: linear-gradient(90deg, #f44336, #e91e63);
+            color: white;
+        }
+        
+        .btn-resolve {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            color: white;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(92, 225, 230, 0.3);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #eaeaea;
+            margin-bottom: 1rem;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #5ce1e6;
+            box-shadow: 0 0 0 2px rgba(92, 225, 230, 0.2);
+        }
+        
+        .search-box::placeholder {
+            color: #b8c1ec;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .nav-tabs {
+            border-bottom: 1px solid rgba(92, 225, 230, 0.3);
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #b8c1ec;
+            border: none;
+            background: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: rgba(92, 225, 230, 0.1);
+            color: #5ce1e6;
+            border-bottom: 2px solid #5ce1e6;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: #5ce1e6;
+            background: rgba(92, 225, 230, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2><i class="fas fa-shield-alt"></i> Admin Panel</h2>
+        <nav>
+            <a href="#dashboard" class="active" onclick="showTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+            <a href="#users" onclick="showTab('users')">
+                <i class="fas fa-users"></i>
+                User Management
+            </a>
+            <a href="#requests" onclick="showTab('requests')">
+                <i class="fas fa-graduation-cap"></i>
+                Tuition Requests
+            </a>
+            <a href="#payments" onclick="showTab('payments')">
+                <i class="fas fa-money-bill-wave"></i>
+                Payments & Commissions
+            </a>
+            <a href="#reports" onclick="showTab('reports')">
+                <i class="fas fa-flag"></i>
+                Reports
+            </a>
+            <a href="#analytics" onclick="showTab('analytics')">
+                <i class="fas fa-chart-line"></i>
+                Analytics
+            </a>
+            <a href="../pages/login.html">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="dashboard-header-flex">
+                <h1>Welcome, Admin</h1>
+                <button class="notification-bell" id="notification-bell" aria-label="View notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge hidden" id="badge-bell">0</span>
+                </button>
+            </div>
+            <p>Manage TutorBridge platform and monitor user activities</p>
+        </div>
+
+        <!-- Payments & Commissions -->
+        <div id="payments" class="tab-content">
+            <div class="content-section">
+                <h3><i class="fas fa-money-bill-wave"></i> Payments & Commissions</h3>
+                <div class="table-responsive">
+                    <table class="table" id="paymentsTable">
+                        <thead>
+                            <tr>
+                                <th>Payment ID</th>
+                                <th>Match</th>
+                                <th>Student</th>
+                                <th>Tutor</th>
+                                <th>Amount (BDT)</th>
+                                <th>Status</th>
+                                <th>Commission</th>
+                                <th>Collection</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Overview -->
+        <div id="dashboard" class="tab-content active">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card tutors">
+                    <div class="icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>247</h3>
+                    <p>Total Tutors</p>
+                </div>
+                <div class="stat-card students">
+                    <div class="icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>1,234</h3>
+                    <p>Total Students</p>
+                </div>
+                <div class="stat-card requests">
+                    <div class="icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>89</h3>
+                    <p>Active Requests</p>
+                </div>
+                <div class="stat-card reports">
+                    <div class="icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>12</h3>
+                    <p>Pending Reports</p>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="content-section">
+                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <button class="btn btn-action btn-view w-100" onclick="showTab('users')">
+                            <i class="fas fa-users"></i> Manage Users
+                        </button>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <button class="btn btn-action btn-view w-100" onclick="showTab('requests')">
+                            <i class="fas fa-graduation-cap"></i> View Requests
+                        </button>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <button class="btn btn-action btn-view w-100" onclick="showTab('reports')">
+                            <i class="fas fa-flag"></i> Handle Reports
+                        </button>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <button class="btn btn-action btn-view w-100" onclick="showTab('analytics')">
+                            <i class="fas fa-chart-line"></i> View Analytics
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Management -->
+        <div id="users" class="tab-content">
+            <div class="content-section">
+                <h3><i class="fas fa-users"></i> User Management</h3>
+                <input type="text" class="search-box w-100" placeholder="Search users..." onkeyup="filterTable('usersTable', this.value)">
+                <div class="table-responsive">
+                    <table class="table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sarah Johnson</td>
+                                <td>sarah.j@email.com</td>
+                                <td>Tutor</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2024-01-15</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewUser('sarah-johnson')">View</button>
+                                    <button class="btn-action btn-block" onclick="blockUser('sarah-johnson')">Block</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mike Chen</td>
+                                <td>mike.chen@email.com</td>
+                                <td>Student</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2024-02-03</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewUser('mike-chen')">View</button>
+                                    <button class="btn-action btn-block" onclick="blockUser('mike-chen')">Block</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Emily Davis</td>
+                                <td>emily.d@email.com</td>
+                                <td>Tutor</td>
+                                <td><span class="status-badge status-blocked">Blocked</span></td>
+                                <td>2024-01-20</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewUser('emily-davis')">View</button>
+                                    <button class="btn-action btn-view" onclick="unblockUser('emily-davis')">Unblock</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>David Wilson</td>
+                                <td>david.w@email.com</td>
+                                <td>Student</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2024-02-10</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewUser('david-wilson')">View</button>
+                                    <button class="btn-action btn-block" onclick="blockUser('david-wilson')">Block</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lisa Brown</td>
+                                <td>lisa.brown@email.com</td>
+                                <td>Tutor</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>2024-02-15</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewUser('lisa-brown')">View</button>
+                                    <button class="btn-action btn-view" onclick="approveUser('lisa-brown')">Approve</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tuition Requests -->
+        <div id="requests" class="tab-content">
+            <div class="content-section">
+                <h3><i class="fas fa-graduation-cap"></i> Tuition Requests</h3>
+                <input type="text" class="search-box w-100" placeholder="Search requests..." onkeyup="filterTable('requestsTable', this.value)">
+                <div class="table-responsive">
+                    <table class="table" id="requestsTable">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Location</th>
+                                <th>Student Name</th>
+                                <th>Status</th>
+                                <th>Posted Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mathematics</td>
+                                <td>New York, NY</td>
+                                <td>Alex Thompson</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>2024-02-20</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewRequest('math-001')">View</button>
+                                    <button class="btn-action btn-resolve" onclick="assignTutor('math-001')">Assign</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Physics</td>
+                                <td>Los Angeles, CA</td>
+                                <td>Maria Garcia</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2024-02-18</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewRequest('physics-002')">View</button>
+                                    <button class="btn-action btn-resolve" onclick="closeRequest('physics-002')">Close</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>English Literature</td>
+                                <td>Chicago, IL</td>
+                                <td>James Wilson</td>
+                                <td><span class="status-badge status-resolved">Resolved</span></td>
+                                <td>2024-02-15</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewRequest('english-003')">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Chemistry</td>
+                                <td>Houston, TX</td>
+                                <td>Sophie Lee</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>2024-02-22</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewRequest('chemistry-004')">View</button>
+                                    <button class="btn-action btn-resolve" onclick="assignTutor('chemistry-004')">Assign</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Computer Science</td>
+                                <td>Seattle, WA</td>
+                                <td>Ryan Park</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2024-02-19</td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewRequest('cs-005')">View</button>
+                                    <button class="btn-action btn-resolve" onclick="closeRequest('cs-005')">Close</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="payments-summary-section">
+                    <h4 class="payments-summary-title">
+                        <i class="fas fa-hand-holding-usd"></i> Payments & Commissions (by Request)
+                    </h4>
+                    <div id="requestPaymentsSummary" class="row payments-summary-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports -->
+        <div id="reports" class="tab-content">
+            <div class="content-section">
+                <h3><i class="fas fa-flag"></i> Reported Content</h3>
+                <input type="text" class="search-box w-100" placeholder="Search reports..." onkeyup="filterTable('reportsTable', this.value)">
+                <div class="table-responsive">
+                    <table class="table" id="reportsTable">
+                        <thead>
+                            <tr>
+                                <th>Reported By</th>
+                                <th>Reason</th>
+                                <th>Content Type</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>Inappropriate behavior</td>
+                                <td>User Profile</td>
+                                <td>2024-02-21</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewReport('report-001')">View</button>
+                                    <button class="btn-action btn-resolve" onclick="resolveReport('report-001')">Resolve</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Emma Davis</td>
+                                <td>Spam content</td>
+                                <td>Message</td>
+                                <td>2024-02-20</td>
+                                <td><span class="status-badge status-resolved">Resolved</span></td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewReport('report-002')">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Michael Brown</td>
+                                <td>Fake credentials</td>
+                                <td>User Profile</td>
+                                <td>2024-02-19</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewReport('report-003')">View</button>
+                                    <button class="btn-action btn-resolve" onclick="resolveReport('report-003')">Resolve</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lisa Anderson</td>
+                                <td>Harassment</td>
+                                <td>Message</td>
+                                <td>2024-02-18</td>
+                                <td><span class="status-badge status-resolved">Resolved</span></td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewReport('report-004')">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Robert Johnson</td>
+                                <td>Inappropriate content</td>
+                                <td>Profile Picture</td>
+                                <td>2024-02-22</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-action btn-view" onclick="viewReport('report-005')">View</button>
+                                    <button class="btn-action btn-resolve" onclick="resolveReport('report-005')">Resolve</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div id="analytics" class="tab-content">
+            <div class="content-section">
+                <h3><i class="fas fa-chart-line"></i> Payments Analytics</h3>
+                <div class="row" id="analyticsCards">
+                    <!-- Populated by JS from mock data -->
+                </div>
+                <div class="stat-card commission-trend-card">
+                    <h4 class="trend-title">Monthly Commission Trend</h4>
+                    <div id="commissionTrend" class="commission-trend-chart">
+                        <!-- Simple bar representation populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content admin-modal">
+                <div class="modal-header admin-modal-header">
+                    <h5 class="modal-title admin-modal-title" id="userDetailsModalLabel">User Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="userDetailsContent"></div>
+                </div>
+                <div class="modal-footer admin-modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="../scripts/supabaseClient.js"></script>
+    <script defer src="../scripts/mockData.js"></script>
+    <script defer src="../scripts/auth.js"></script>
+    <script defer src="../scripts/admin-data.js"></script>
+    <script defer src="../scripts/admin-dashboard.js"></script>
+    <script src="../scripts/payments.js"></script>
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Update sidebar navigation
+            const navLinks = document.querySelectorAll('.sidebar nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Find and activate the corresponding nav link
+            const activeLink = document.querySelector(`[onclick="showTab('${tabName}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // Table filtering functionality
+        function filterTable(tableId, searchTerm) {
+            const table = document.getElementById(tableId);
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+                let found = false;
+                
+                for (let j = 0; j < cells.length; j++) {
+                    const cellText = cells[j].textContent.toLowerCase();
+                    if (cellText.includes(searchTerm.toLowerCase())) {
+                        found = true;
+                        break;
+                    }
+                }
+                
+                row.style.display = found ? '' : 'none';
+            }
+        }
+
+        // Action functions (placeholders for backend integration)
+        function viewUser(userId) {
+            alert(`Viewing user: ${userId}`);
+            // In a real application, this would navigate to a user detail page
+        }
+
+        function blockUser(userId) {
+            if (confirm(`Are you sure you want to block user: ${userId}?`)) {
+                alert(`User ${userId} has been blocked`);
+                // In a real application, this would make an API call to block the user
+            }
+        }
+
+        function unblockUser(userId) {
+            if (confirm(`Are you sure you want to unblock user: ${userId}?`)) {
+                alert(`User ${userId} has been unblocked`);
+                // In a real application, this would make an API call to unblock the user
+            }
+        }
+
+        function approveUser(userId) {
+            if (confirm(`Are you sure you want to approve user: ${userId}?`)) {
+                alert(`User ${userId} has been approved`);
+                // In a real application, this would make an API call to approve the user
+            }
+        }
+
+        function viewRequest(requestId) {
+            alert(`Viewing request: ${requestId}`);
+            // In a real application, this would navigate to a request detail page
+        }
+
+        function assignTutor(requestId) {
+            if (confirm(`Are you sure you want to assign a tutor to request: ${requestId}?`)) {
+                alert(`Tutor assigned to request ${requestId}`);
+                // In a real application, this would make an API call to assign a tutor
+            }
+        }
+
+        function closeRequest(requestId) {
+            if (confirm(`Are you sure you want to close request: ${requestId}?`)) {
+                alert(`Request ${requestId} has been closed`);
+                // In a real application, this would make an API call to close the request
+            }
+        }
+
+        function viewReport(reportId) {
+            alert(`Viewing report: ${reportId}`);
+            // In a real application, this would navigate to a report detail page
+        }
+
+        function resolveReport(reportId) {
+            if (confirm(`Are you sure you want to mark report: ${reportId} as resolved?`)) {
+                alert(`Report ${reportId} has been resolved`);
+                // In a real application, this would make an API call to resolve the report
+            }
+        }
+
+        async function renderPaymentsTable() {
+            const tbody = document.querySelector('#paymentsTable tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            try {
+                const payments = await (window.AdminData?.fetchPayments ? window.AdminData.fetchPayments() : Promise.resolve(window.mockPayments || []));
+                (payments || []).forEach(p => {
+                    const tr = document.createElement('tr');
+                    const commissionText = (p.commission_amount != null && p.commission_rate != null)
+                        ? `${p.commission_amount} (${Math.round(p.commission_rate * 100)}%)`
+                        : '-';
+                    const collection = p.commission_status || '-';
+                    tr.innerHTML = `
+                        <td>${p.id}</td>
+                        <td>${p.match_id || p.session_id || ''}</td>
+                        <td>${p.student_id || ''}</td>
+                        <td>${p.tutor_id || ''}</td>
+                        <td>${p.amount_total != null ? p.amount_total : p.amount || ''}</td>
+                        <td><span class="status-badge ${p.payment_status === 'received' || p.payment_status === 'paid' ? 'status-active' : 'status-pending'}">${p.payment_status || p.status}</span></td>
+                        <td>${commissionText}</td>
+                        <td>${collection}</td>
+                        <td>
+                            ${collection === 'pending' ? `<button class="btn-action btn-resolve" onclick="onMarkCollected('${p.id}')">Mark Collected</button>` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) {
+                console.error('Failed to render payments table:', e);
+                alert('Failed to load payments.');
+            }
+        }
+
+        async function onMarkCollected(paymentId) {
+            try {
+                await window.markCommissionCollected(paymentId);
+                renderPaymentsTable();
+                renderAnalytics();
+                alert('Commission marked as collected.');
+            } catch (e) {
+                alert('Failed: ' + e.message);
+            }
+        }
+
+        async function renderAnalytics() {
+            let summary = null;
+            try {
+                if (window.AdminData?.getAnalyticsSummary) {
+                    summary = await window.AdminData.getAnalyticsSummary();
+                }
+            } catch (e) {
+                console.warn('Failed to load analytics from Supabase, falling back:', e);
+            }
+
+            if (!summary) {
+                const payments = window.mockPayments || [];
+                const commissions = window.mockCommissions || [];
+                const totalPayments = payments.length;
+                const totalPending = commissions.filter(c => c.collection_status === 'pending').reduce((s, c) => s + (c.commission_amount || 0), 0);
+                const totalCollected = commissions.filter(c => c.collection_status === 'collected').reduce((s, c) => s + (c.commission_amount || 0), 0);
+                const cards = document.getElementById('analyticsCards');
+                if (cards) {
+                    cards.innerHTML = `
+                        <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${totalPayments}</h4><p>Total Payments Processed</p></div></div>
+                        <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${totalPending} BDT</h4><p>Total Commission Pending</p></div></div>
+                        <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${totalCollected} BDT</h4><p>Total Commission Collected</p></div></div>
+                    `;
+                }
+                const trendEl = document.getElementById('commissionTrend');
+                if (trendEl) {
+                    const monthKey = d => (d.created_at||'').slice(0,7);
+                    const map = {};
+                    payments.forEach(p => {
+                        const k = monthKey(p) || 'N/A';
+                        const amt = (p.commission_amount != null) ? p.commission_amount : Math.round((Number(p.amount_total||0))*0.10);
+                        map[k] = (map[k]||0) + amt;
+                    });
+                    const months = Object.keys(map).sort();
+                    trendEl.innerHTML = '';
+                    months.forEach(m => {
+                        const val = map[m];
+                        const bar = document.createElement('div');
+                        bar.className = 'bar';
+                        bar.title = `${m}: ${val} BDT`;
+                        bar.style.height = Math.max(3, Math.min(100, Math.round(val/100))) + 'px';
+                        bar.style.background = '#4caf50';
+                        bar.style.marginRight = '6px';
+                        bar.style.width = '16px';
+                        trendEl.appendChild(bar);
+                    });
+                }
+                return;
+            }
+
+            const cards = document.getElementById('analyticsCards');
+            if (cards) {
+                const c = summary.counts || {};
+                cards.innerHTML = `
+                    <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${c.totalPayments || 0}</h4><p>Total Payments Processed</p></div></div>
+                    <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${c.commissionPending || 0} BDT</h4><p>Total Commission Pending</p></div></div>
+                    <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${c.commissionCollected || 0} BDT</h4><p>Total Commission Collected</p></div></div>
+                `;
+            }
+
+            const trendEl = document.getElementById('commissionTrend');
+            if (trendEl) {
+                const byMonth = (summary.charts && summary.charts.commissionByMonth) || {};
+                const months = Object.keys(byMonth).sort();
+                trendEl.innerHTML = '';
+                months.forEach(m => {
+                    const val = byMonth[m] || 0;
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    bar.title = `${m}: ${val} BDT`;
+                    bar.style.height = Math.max(3, Math.min(100, Math.round(val/100))) + 'px';
+                    bar.style.background = '#4caf50';
+                    bar.style.marginRight = '6px';
+                    bar.style.width = '16px';
+                    trendEl.appendChild(bar);
+                });
+            }
+        }
+
+        function approveUser(userId) {
+            if (confirm(`Are you sure you want to approve user: ${userId}?`)) {
+                alert(`User ${userId} has been approved`);
+                // In a real application, this would make an API call to approve the user
+            }
+        }
+
+        function viewRequest(requestId) {
+            alert(`Viewing request: ${requestId}`);
+            // In a real application, this would navigate to a request detail page
+        }
+
+        function assignTutor(requestId) {
+            if (confirm(`Are you sure you want to assign a tutor to request: ${requestId}?`)) {
+                alert(`Tutor assigned to request ${requestId}`);
+                // In a real application, this would make an API call to assign a tutor
+            }
+        }
+
+        function closeRequest(requestId) {
+            if (confirm(`Are you sure you want to close request: ${requestId}?`)) {
+                alert(`Request ${requestId} has been closed`);
+                // In a real application, this would make an API call to close the request
+            }
+        }
+
+        function viewReport(reportId) {
+            alert(`Viewing report: ${reportId}`);
+            // In a real application, this would navigate to a report detail page
+        }
+
+        function resolveReport(reportId) {
+            if (confirm(`Are you sure you want to mark report: ${reportId} as resolved?`)) {
+                alert(`Report ${reportId} has been resolved`);
+                // In a real application, this would make an API call to resolve the report
+            }
+        }
+
+        async function renderPaymentsTable() {
+            const tbody = document.querySelector('#paymentsTable tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            try {
+                const payments = await (window.AdminData?.fetchPayments ? window.AdminData.fetchPayments() : Promise.resolve(window.mockPayments || []));
+                (payments || []).forEach(p => {
+                    const tr = document.createElement('tr');
+                    const commissionText = (p.commission_amount != null && p.commission_rate != null)
+                        ? `${p.commission_amount} (${Math.round(p.commission_rate * 100)}%)`
+                        : '-';
+                    const collection = p.commission_status || '-';
+                    tr.innerHTML = `
+                        <td>${p.id}</td>
+                        <td>${p.match_id || p.session_id || ''}</td>
+                        <td>${p.student_id || ''}</td>
+                        <td>${p.tutor_id || ''}</td>
+                        <td>${p.amount_total != null ? p.amount_total : p.amount || ''}</td>
+                        <td><span class="status-badge ${p.payment_status === 'received' || p.payment_status === 'paid' ? 'status-active' : 'status-pending'}">${p.payment_status || p.status}</span></td>
+                        <td>${commissionText}</td>
+                        <td>${collection}</td>
+                        <td>
+                            ${collection === 'pending' ? `<button class="btn-action btn-resolve" onclick="onMarkCollected('${p.id}')">Mark Collected</button>` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) {
+                console.error('Failed to render payments table:', e);
+                alert('Failed to load payments.');
+            }
+        }
+
+        async function onMarkCollected(paymentId) {
+            try {
+                await window.markCommissionCollected(paymentId);
+                renderPaymentsTable();
+                renderAnalytics();
+                alert('Commission marked as collected.');
+            } catch (e) {
+                alert('Failed: ' + e.message);
+            }
+        }
+
+        function renderAnalytics() {
+            const payments = window.mockPayments || [];
+            const commissions = window.mockCommissions || [];
+
+            const totalPayments = payments.length;
+            const totalPending = commissions.filter(c => c.collection_status === 'pending').reduce((s, c) => s + (c.commission_amount || 0), 0);
+            const totalCollected = commissions.filter(c => c.collection_status === 'collected').reduce((s, c) => s + (c.commission_amount || 0), 0);
+
+            const cards = document.getElementById('analyticsCards');
+            if (cards) {
+                cards.innerHTML = `
+                    <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${totalPayments}</h4><p>Total Payments Processed</p></div></div>
+                    <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${totalPending} BDT</h4><p>Total Commission Pending</p></div></div>
+                    <div class="col-md-4 mb-4"><div class="stat-card"><h4 style="color:#eaeaea;">${totalCollected} BDT</h4><p>Total Commission Collected</p></div></div>
+                `;
+            }
+
+            // Simple monthly bar trend from commission created_at/payment created_at
+            const byMonth = {};
+            payments.forEach(p => {
+                const month = (p.created_at || '').slice(0, 7);
+                const comm = commissions.find(c => c.payment_id === p.id);
+                const amount = comm ? comm.commission_amount : 0;
+                byMonth[month] = (byMonth[month] || 0) + amount;
+            });
+            const months = Object.keys(byMonth).sort();
+            const container = document.getElementById('commissionTrend');
+            if (container) {
+                container.innerHTML = '';
+                if (months.length === 0) {
+                    container.textContent = 'No data';
+                } else {
+                    const max = Math.max(...months.map(m => byMonth[m]));
+                    const barWrap = document.createElement('div');
+                    barWrap.style.display = 'flex';
+                    barWrap.style.gap = '8px';
+                    barWrap.style.alignItems = 'flex-end';
+                    barWrap.style.height = '120px';
+                    months.forEach(m => {
+                        const bar = document.createElement('div');
+                        bar.title = `${m}: ${byMonth[m]} BDT`;
+                        bar.style.width = '28px';
+                        bar.style.height = (max ? (byMonth[m] / max) * 100 : 0) + '%';
+                        bar.style.background = 'linear-gradient(135deg, #5ce1e6, #4fc3f7)';
+                        bar.style.borderRadius = '6px 6px 0 0';
+                        barWrap.appendChild(bar);
+                    });
+                    container.appendChild(barWrap);
+                }
+            }
+
+            
+
+            function approveUser(userId) {
+                if (confirm(`Are you sure you want to approve user: ${userId}?`)) {
+                    alert(`User ${userId} has been approved`);
+                    // In a real application, this would make an API call to approve the user
+                }
+            }
+
+            function viewRequest(requestId) {
+                alert(`Viewing request: ${requestId}`);
+                // In a real application, this would navigate to a request detail page
+            }
+
+            function assignTutor(requestId) {
+                if (confirm(`Are you sure you want to assign a tutor to request: ${requestId}?`)) {
+                    alert(`Tutor assigned to request ${requestId}`);
+                    // In a real application, this would make an API call to assign a tutor
+                }
+            }
+
+            function closeRequest(requestId) {
+                if (confirm(`Are you sure you want to close request: ${requestId}?`)) {
+                    alert(`Request ${requestId} has been closed`);
+                    // In a real application, this would make an API call to close the request
+                }
+            }
+
+            function viewReport(reportId) {
+                alert(`Viewing report: ${reportId}`);
+                // In a real application, this would navigate to a report detail page
+            }
+
+            function resolveReport(reportId) {
+                if (confirm(`Are you sure you want to mark report: ${reportId} as resolved?`)) {
+                    alert(`Report ${reportId} has been resolved`);
+                    // In a real application, this would make an API call to resolve the report
+                }
+            }
+
+            
+
+            
+
+            
+
+            // Initialize the dashboard
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOM loaded, checking dependencies...');
+                
+                // Wait for all scripts to load
+                setTimeout(function() {
+                    console.log('window.auth:', window.auth);
+                    console.log('window.mockUsers:', window.mockUsers);
+                    console.log('window.AdminData:', window.AdminData);
+                    
+                    // Check admin authentication
+                    if (window.auth && !window.auth.isAdmin()) {
+                        console.log('Not admin, redirecting...');
+                        alert('Admin access only');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    
+                    console.log('Admin Dashboard loaded successfully');
+                    
+                    // Load data into tables using mock data directly
+                    loadUsersTable();
+                    loadRequestsTable();
+                    loadReportsTable();
+                    renderPaymentsTable();
+                    renderAnalytics();
+                }, 500);
+            });
+
+            // Load users table with mock data
+            function loadUsersTable() {
+                const tbody = document.querySelector('#usersTable tbody');
+                if (!tbody || !window.mockUsers) return;
+                
+                tbody.innerHTML = '';
+                window.mockUsers.forEach(user => {
+                    const tr = document.createElement('tr');
+                    const statusClass = user.status === 'active' ? 'status-active' : 
+                                      user.status === 'blocked' ? 'status-blocked' : 'status-pending';
+                    tr.innerHTML = `
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+                        <td><span class="status-badge ${statusClass}">${user.status}</span></td>
+                        <td>${user.created_at ? new Date(user.created_at).toLocaleDateString() : ''}</td>
+                        <td>
+                            <button class="btn-action btn-view" onclick="viewUser('${user.id}')">View</button>
+                            ${user.role === 'tutor' && user.status === 'pending' ? 
+                              `<button class="btn-action btn-view" onclick="approveUser('${user.id}')">Approve</button>` : ''}
+                            <button class="btn-action ${user.status === 'blocked' ? 'btn-view' : 'btn-block'}" 
+                                    onclick="${user.status === 'blocked' ? 'unblockUser' : 'blockUser'}('${user.id}')">
+                                ${user.status === 'blocked' ? 'Unblock' : 'Block'}
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Load requests table with mock data
+            function loadRequestsTable() {
+                const tbody = document.querySelector('#requestsTable tbody');
+                if (!tbody || !window.mockRequests) return;
+                
+                tbody.innerHTML = '';
+                window.mockRequests.forEach(request => {
+                    const tr = document.createElement('tr');
+                    const statusClass = request.status === 'open' ? 'status-pending' : 
+                                      request.status === 'matched' ? 'status-active' : 'status-resolved';
+                    tr.innerHTML = `
+                        <td>${request.subject}</td>
+                        <td>${request.location}</td>
+                        <td>${request.student_name}</td>
+                        <td><span class="status-badge ${statusClass}">${request.status}</span></td>
+                        <td>${request.created_at ? new Date(request.created_at).toLocaleDateString() : ''}</td>
+                        <td>
+                            <button class="btn-action btn-view" onclick="viewRequest('${request.id}')">View</button>
+                            ${request.status === 'open' ? 
+                              `<button class="btn-action btn-resolve" onclick="assignTutor('${request.id}')">Assign</button>` : ''}
+                            ${request.status === 'matched' ? 
+                              `<button class="btn-action btn-resolve" onclick="closeRequest('${request.id}')">Close</button>` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Load reports table with mock data
+            function loadReportsTable() {
+                const tbody = document.querySelector('#reportsTable tbody');
+                if (!tbody || !window.mockReports) return;
+                
+                tbody.innerHTML = '';
+                window.mockReports.forEach(report => {
+                    const tr = document.createElement('tr');
+                    const statusClass = report.status === 'pending' ? 'status-pending' : 'status-resolved';
+                    tr.innerHTML = `
+                        <td>${report.reported_by}</td>
+                        <td>${report.reason}</td>
+                        <td>${report.content_type}</td>
+                        <td>${report.created_at ? new Date(report.created_at).toLocaleDateString() : ''}</td>
+                        <td><span class="status-badge ${statusClass}">${report.status}</span></td>
+                        <td>
+                            <button class="btn-action btn-view" onclick="viewReport('${report.id}')">View</button>
+                            ${report.status === 'pending' ? 
+                              `<button class="btn-action btn-resolve" onclick="resolveReport('${report.id}')">Resolve</button>` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        </script>
+    </body>
+</html>

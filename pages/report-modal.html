@@ -1,0 +1,37 @@
+<!-- Reusable Report Modal Component -->
+<div id="report-overlay" class="report-overlay" aria-hidden="true"></div>
+<div id="report-modal" class="report-modal" role="dialog" aria-modal="true" aria-labelledby="report-modal-title" aria-hidden="true">
+    <div class="report-modal__header">
+        <h2 id="report-modal-title"><i class="fas fa-flag"></i> Report</h2>
+        <button type="button" class="report-modal__close" id="report-close-btn" aria-label="Close report dialog">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <form id="report-form" class="report-form">
+        <input type="hidden" name="reporter_id" id="reporter_id" />
+        <input type="hidden" name="reported_user_id" id="reported_user_id" />
+        <input type="hidden" name="content_id" id="content_id" />
+
+        <div class="form-group">
+            <label for="report-reason">Reason</label>
+            <select id="report-reason" name="reason" required>
+                <option value="">Select a reason</option>
+                <option value="Spam">Spam</option>
+                <option value="Harassment">Harassment</option>
+                <option value="Inappropriate Content">Inappropriate Content</option>
+                <option value="Fake Info">Fake Info</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="report-details">Additional Details (optional)</label>
+            <textarea id="report-details" name="details" rows="4" placeholder="Provide more context if needed..."></textarea>
+        </div>
+
+        <div class="report-actions">
+            <button type="button" class="btn secondary" id="report-cancel-btn">Cancel</button>
+            <button type="submit" class="btn primary" id="report-submit-btn">Submit Report</button>
+        </div>
+    </form>
+</div>

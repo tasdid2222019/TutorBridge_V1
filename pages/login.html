@@ -68,6 +68,10 @@
         .auth-form button:hover {
             background: linear-gradient(90deg, #b8c1ec, #5ce1e6);
         }
+        .auth-form button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
         .auth-form .form-footer {
             text-align: center;
             margin-top: 1.2rem;
@@ -80,6 +84,29 @@
         .auth-form .form-footer a:hover {
             text-decoration: underline;
         }
+        .error-message {
+            background: rgba(238, 183, 183, 0.1);
+            border: 1px solid rgba(238, 183, 183, 0.3);
+            color: #eeb7b7;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         @media (max-width: 500px) {
             .auth-container {
                 padding: 1.2rem 0.5rem;
@@ -90,7 +117,10 @@
 <body>
     <div class="auth-container">
         <h2>Login to TutorBridge</h2>
-        <form class="auth-form" action="#" method="post" onsubmit="return validateLoginForm()">
+        
+        <div id="error-message" class="error-message"></div>
+        
+        <form class="auth-form" id="login-form">
             <label for="login-email">Email</label>
             <input type="email" id="login-email" name="email" required placeholder="Enter your email">
 
@@ -100,25 +130,139 @@
             <div class="role-select">
                 <label><input type="radio" name="role" value="student" required> Student/Parent</label>
                 <label><input type="radio" name="role" value="tutor" required> Tutor</label>
+                <label><input type="radio" name="role" value="admin" required> Admin</label>
             </div>
 
-            <button type="submit">Login</button>
+            <button type="submit" id="login-btn">
+                <span id="login-text">Login</span>
+                <span id="login-loading" style="display: none;">
+                    <span class="loading-spinner"></span>Logging in...
+                </span>
+            </button>
+            
             <div class="form-footer">
                 Don't have an account? <a href="signup.html">Sign up</a>
             </div>
         </form>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabaseClient.js"></script>
     <script>
-        function validateLoginForm() {
-            var email = document.getElementById('login-email').value.trim();
-            var password = document.getElementById('login-password').value.trim();
-            var roleChecked = document.querySelector('input[name="role"]:checked');
-            if (!email || !password || !roleChecked) {
-                alert('Please fill in all required fields and select a role.');
-                return false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const loginBtn = document.getElementById('login-btn');
+            const loginText = document.getElementById('login-text');
+            const loginLoading = document.getElementById('login-loading');
+            const errorMessage = document.getElementById('error-message');
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
             }
-            return true;
-        }
+
+            function hideError() {
+                errorMessage.style.display = 'none';
+            }
+
+            function setLoading(loading) {
+                if (loading) {
+                    loginBtn.disabled = true;
+                    loginText.style.display = 'none';
+                    loginLoading.style.display = 'inline';
+                } else {
+                    loginBtn.disabled = false;
+                    loginText.style.display = 'inline';
+                    loginLoading.style.display = 'none';
+                }
+            }
+
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value.trim();
+                const password = document.getElementById('login-password').value.trim();
+                const role = document.querySelector('input[name="role"]:checked')?.value;
+
+                if (!email || !password || !role) {
+                    showError('Please fill in all required fields and select a role.');
+                    return;
+                }
+
+                hideError();
+                setLoading(true);
+
+                try {
+                    // Try Supabase Auth Integration first
+                    const supabase = window.initSupabase?.();
+                    
+                    if (supabase) {
+                        const { data, error } = await supabase.auth.signInWithPassword({
+                            email: email,
+                            password: password
+                        });
+
+                        if (error) throw error;
+
+                        // Verify user role matches selected role
+                        const { data: profile, error: profileError } = await supabase
+                            .from('profiles')
+                            .select('role')
+                            .eq('id', data.user.id)
+                            .single();
+
+                        if (profileError) throw profileError;
+
+                        if (profile.role !== role) {
+                            throw new Error(`Account is registered as ${profile.role}, not ${role}`);
+                        }
+
+                        // Store user info in session
+                        sessionStorage.setItem('currentUser', JSON.stringify({
+                            id: data.user.id,
+                            email: data.user.email,
+                            role: profile.role
+                        }));
+                    } else {
+                        // Fallback to mock authentication for development
+                        console.log('Supabase not available, using mock authentication');
+                        
+                        // Mock user validation - accept any email/password for demo
+                        const mockUser = {
+                            id: 'mock-' + role + '-' + Date.now(),
+                            email: email,
+                            role: role
+                        };
+
+                        // Store mock user in session
+                        sessionStorage.setItem('currentUser', JSON.stringify(mockUser));
+                    }
+
+                    // Redirect based on role
+                    if (role === 'admin') {
+                        window.location.href = 'admin-dashboard.html';
+                    } else if (role === 'tutor') {
+                        window.location.href = 'tutor-dashboard.html';
+                    } else {
+                        window.location.href = 'student-dashboard.html';
+                    }
+
+                } catch (error) {
+                    console.error('Login error:', error);
+                    
+                    // Handle specific error cases
+                    if (error.message.includes('Invalid login credentials')) {
+                        showError('Invalid email or password. Please try again.');
+                    } else if (error.message.includes('Account is registered as')) {
+                        showError(error.message);
+                    } else {
+                        showError('Login failed. Please try again.');
+                    }
+                } finally {
+                    setLoading(false);
+                }
+            });
+        });
     </script>
 </body>
 </html> 

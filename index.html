@@ -4,26 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TutorBridge - Find Trusted Tutors</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">Tutor<span>Bridge</span></div>
-        <nav class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Find Tutors</a>
-            <a href="#">Post Tuition Request</a>
-            <a href="#">How It Works</a>
-        </nav>
-        <button class="sign-in-btn">Sign In</button>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>TutorBridge</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="pages/signup.html" class="btn-secondary">Sign Up</a>
+                <a href="pages/login.html" class="sign-in-btn btn-primary">Sign In</a>
+            </div>
+            <div id="connection-status" style="position: absolute; top: 10px; right: 10px; font-size: 0.8rem; padding: 0.25rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.1); color: #b8c1ec;">
+                <span id="status-text">Connecting...</span>
+            </div>
+        </div>
     </header>
     <section class="hero">
         <div class="hero-content">
             <h1>Find Trusted Tutors Near You or Online</h1>
             <p>Connecting students with qualified tutors for any subject, any level.</p>
             <div class="hero-actions">
-                <button class="find-tutor">Find a Tutor</button>
-                <button class="post-request">Post a Request</button>
+                <button class="find-tutor" onclick="window.location.href='pages/find-tutors.html'">Find a Tutor</button>
+                <button class="post-request" onclick="window.location.href='pages/tuition-request-form.html'">Post a Request</button>
             </div>
         </div>
         <div class="hero-image">
@@ -31,21 +41,21 @@
         </div>
     </section>
     <section class="search-bar">
-        <form>
-            <select name="subject">
+        <form id="search-form">
+            <select name="subject" id="search-subject">
                 <option>Subject</option>
             </select>
-            <select name="class-level">
+            <select name="class-level" id="search-class-level">
                 <option>Class Level</option>
             </select>
-            <input type="text" placeholder="Location">
-            <select name="tuition-type">
+            <input type="text" placeholder="Location" id="search-location">
+            <select name="tuition-type" id="search-tuition-type">
                 <option>Tuition Type</option>
             </select>
             <button type="submit">Search</button>
         </form>
     </section>
-    <section class="how-it-works">
+    <section class="how-it-works" id="how-it-works">
         <h2>How It Works</h2>
         <div class="steps">
             <div class="step">
@@ -68,39 +78,14 @@
     </section>
     <section class="featured-tutors">
         <h2>Featured Tutors</h2>
-        <div class="tutors-list">
-            <div class="tutor-card">
-                <img src="/assets/images/tutor1.jpg" alt="Sarah Ahmed">
-                <h3>Sarah Ahmed</h3>
-                <p>Mathematics</p>
-                <div class="rating">★★★★★ 5.0</div>
-                <div class="location">Dhaka</div>
-                <button>View Profile</button>
+        <div id="loading" style="display: flex; justify-content: center; align-items: center; padding: 2rem; color: #5ce1e6;">
+            <div style="text-align: center;">
+                <div class="loading-spinner" style="width: 40px; height: 40px; border: 4px solid rgba(92, 225, 230, 0.3); border-top: 4px solid #5ce1e6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                <p>Loading featured tutors...</p>
             </div>
-            <div class="tutor-card">
-                <img src="/assets/images/tutor2.jpg" alt="Ayesha Rahman">
-                <h3>Ayesha Rahman</h3>
-                <p>English</p>
-                <div class="rating">★★★★☆ 4.8</div>
-                <div class="location">Chittagong</div>
-                <button>View Profile</button>
-            </div>
-            <div class="tutor-card">
-                <img src="/assets/images/tutor3.jpg" alt="Md. Hasan Ali">
-                <h3>Md. Hasan Ali</h3>
-                <p>Science</p>
-                <div class="rating">★★★★☆ 4.7</div>
-                <div class="location">Kohaino</div>
-                <button>View Profile</button>
-            </div>
-            <div class="tutor-card">
-                <img src="/assets/images/tutor4.jpg" alt="Zakin Chowdkury">
-                <h3>Zakin Chowdkury</h3>
-                <p>Physics</p>
-                <div class="rating">★★★★★ 5.0</div>
-                <div class="location">Dhaka</div>
-                <button>View Profile</button>
-            </div>
+        </div>
+        <div id="tutor-list" class="tutor-grid">
+            <!-- Tutors will be loaded here dynamically -->
         </div>
     </section>
     <section class="why-choose-us">
@@ -116,8 +101,245 @@
     </section>
     <footer class="cta-footer">
         <span>Ready to start your learning journey?</span>
-        <button class="signup-student">Sign up as Student</button>
-        <button class="register-tutor">Register as Tutor</button>
+        <button class="signup-student" onclick="window.location.href='pages/signup.html'">Sign up as Student</button>
+        <button class="register-tutor" onclick="window.location.href='pages/signup.html'">Register as Tutor</button> 
     </footer>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-logo">Tutor<span>Bridge</span></span>
+                <div class="footer-copy">&copy; 2024 TutorBridge. All rights reserved.</div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="pages/find-tutors.html">Find Tutors</a>
+                <a href="pages/tuition-request-form.html">Post Tuition Request</a>
+                <a href="#how-it-works">How It Works</a>
+            </div>
+            <div class="footer-social">
+  <!-- Facebook -->
+  <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Visit our Facebook page" class="footer-social-icon facebook">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M22 12A10 10 0 1 0 11.5 22V15H9v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.3.2 2.3.2v2.6h-1.3c-1.3 0-1.7.8-1.7 1.6V12H17l-.5 3h-2.3v7A10 10 0 0 0 22 12z"/>
+    </svg>
+  </a>
+
+  <!-- Twitter/X -->
+  <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Visit our Twitter profile" class="footer-social-icon twitter">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M22 5.92c-.77.34-1.6.57-2.46.68a4.27 4.27 0 0 0 1.88-2.37 8.53 8.53 0 0 1-2.7 1.03A4.25 4.25 0 0 0 16 4a4.27 4.27 0 0 0-4.27 4.27c0 .34.04.67.11.98A12.12 12.12 0 0 1 3.14 5.1a4.27 4.27 0 0 0 1.32 5.7 4.22 4.22 0 0 1-1.93-.53v.05a4.27 4.27 0 0 0 3.43 4.18 4.3 4.3 0 0 1-1.92.07 4.27 4.27 0 0 0 3.99 2.96A8.54 8.54 0 0 1 2 19.54 12.05 12.05 0 0 0 8.29 21c7.55 0 11.68-6.25 11.68-11.68l-.01-.53A8.34 8.34 0 0 0 22 5.92z"/>
+    </svg>
+  </a>
+
+  <!-- LinkedIn -->
+  <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="Visit our LinkedIn page" class="footer-social-icon linkedin">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.09 20H3.9V9h3.19v11zM5.5 7.68c-1.03 0-1.86-.83-1.86-1.86S4.47 3.96 5.5 3.96c1.03 0 1.86.83 1.86 1.86S6.53 7.68 5.5 7.68zM20.1 20h-3.19v-5.36c0-1.28-.03-2.92-1.78-2.92-1.78 0-2.06 1.39-2.06 2.83V20h-3.19V9h3.06v1.51h.04c.43-.82 1.48-1.68 3.04-1.68 3.25 0 3.85 2.14 3.85 4.92V20z"/>
+    </svg>
+  </a>
+</div>
+
+        </div>
+    </footer>
+
+    <!-- JavaScript for dynamic content and search functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="scripts/supabaseClient.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <style>
+    .main-footer {
+        background: linear-gradient(90deg, #232946 60%, #5ce1e6 100%);
+        color: #eaeaea;
+        padding: 1.2rem 2rem 0.7rem 2rem;
+        font-size: 1rem;
+        border-radius: 0 0 18px 18px;
+        box-shadow: 0 -2px 16px #5ce1e633;
+        margin-top: 0.5rem;
+    }
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    .footer-logo {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #5ce1e6;
+    }
+    .footer-logo span {
+        color: #b8c1ec;
+    }
+    .footer-copy {
+        font-size: 0.95rem;
+        color: #b8c1ec;
+        margin-top: 0.3rem;
+    }
+    .footer-links {
+        display: flex;
+        gap: 1.2rem;
+    }
+    .footer-links a {
+        color: #eaeaea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .footer-links a:hover {
+        color: #5ce1e6;
+    }
+    .footer-social {
+        display: flex;
+        gap: 0.7rem;
+    }
+    .footer-social-icon {
+        font-size: 1.3rem;
+        color: #b8c1ec;
+        text-decoration: none;
+        transition: color 0.2s, transform 0.2s;
+    }
+    .footer-social-icon:hover {
+        color: #5ce1e6;
+        transform: scale(1.15);
+    }
+    @media (max-width: 700px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.7rem;
+        }
+        .main-footer {
+            padding: 1.2rem 1rem 0.7rem 1rem;
+        }
+    }
+
+        .tutor-card button:hover {
+            background: rgba(92, 225, 230, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #b8c1ec;
+        }
+
+        .empty-state h3 {
+            color: #5ce1e6;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state .btn-primary {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+            color: #232946;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .empty-state .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(92, 225, 230, 0.3);
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(35, 41, 70, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(92, 225, 230, 0.2);
+        }
+
+        .header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo h1 {
+            color: #5ce1e6;
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: #b8c1ec;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #5ce1e6;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #5ce1e6, #b8c1ec);
+            color: #232946;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #eaeaea;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(92, 225, 230, 0.3);
+        }
+
+        /* Hero section adjustment for fixed header */
+        .hero {
+            margin-top: 80px;
+            padding-top: 4rem;
+        }
+    </style>
 </body>
 </html> 

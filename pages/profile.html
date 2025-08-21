@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | TutorBridge</title>
+    <link rel="stylesheet" href="../styles/tutor.css">
+    <link rel="stylesheet" href="../styles/report.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>TutorBridge</h2>
+        <nav>
+            <a href="tutor-dashboard.html">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+            <a href="applications.html">
+                <i class="fas fa-file-alt"></i>
+                Applications
+                <span class="badge" id="badge-apps">2</span>
+            </a>
+            <a href="tuition-requests.html">
+                <i class="fas fa-graduation-cap"></i>
+                Tuition Requests
+                <span class="badge" id="badge-requests">5</span>
+            </a>
+            <a href="messages.html">
+                <i class="fas fa-comments"></i>
+                Messages
+                <span class="badge dot" id="badge-msg"></span>
+            </a>
+            <a href="profile.html" class="active">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
+            <a href="logout.html">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </nav>
+    </aside>
+    
+    <main class="dashboard-main">
+        <!-- Topbar -->
+        <div class="topbar">
+            <h1><i class="fas fa-user"></i> My Profile</h1>
+            <button class="notification-bell" id="notification-bell">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="badge-bell">7</span>
+            </button>
+            <button class="report-btn" data-reported-user="2001" title="Report this user">
+                <i class="fas fa-flag"></i>
+                Report
+            </button>
+        </div>
+
+        <!-- Profile Form -->
+        <section class="dashboard-section">
+            <h3><i class="fas fa-edit"></i> Edit Profile</h3>
+            <form class="profile-form" id="profile-form">
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" name="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select id="location" name="location" required>
+                        <option value="">Select Location</option>
+                        <option value="Dhaka">Dhaka</option>
+                        <option value="Chittagong">Chittagong</option>
+                        <option value="Sylhet">Sylhet</option>
+                        <option value="Kohaino">Kohaino</option>
+                        <option value="Rajshahi">Rajshahi</option>
+                        <option value="Khulna">Khulna</option>
+                        <option value="Barisal">Barisal</option>
+                        <option value="Rangpur">Rangpur</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subjects">Subjects Taught</label>
+                    <select id="subjects" name="subjects" multiple required>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="English">English</option>
+                        <option value="Bangla">Bangla</option>
+                        <option value="History">History</option>
+                        <option value="Geography">Geography</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Economics">Economics</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="class-levels">Class Levels</label>
+                    <select id="class-levels" name="classLevels" multiple required>
+                        <option value="Grade 1">Grade 1</option>
+                        <option value="Grade 2">Grade 2</option>
+                        <option value="Grade 3">Grade 3</option>
+                        <option value="Grade 4">Grade 4</option>
+                        <option value="Grade 5">Grade 5</option>
+                        <option value="Grade 6">Grade 6</option>
+                        <option value="Grade 7">Grade 7</option>
+                        <option value="Grade 8">Grade 8</option>
+                        <option value="Grade 9">Grade 9</option>
+                        <option value="Grade 10">Grade 10</option>
+                        <option value="Grade 11">Grade 11</option>
+                        <option value="Grade 12">Grade 12</option>
+                        <option value="University">University</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hourly-rate">Hourly Rate (৳)</label>
+                    <input type="number" id="hourly-rate" name="hourlyRate" min="100" step="50" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="availability">Availability</label>
+                    <select id="availability" name="availability" required>
+                        <option value="">Select Availability</option>
+                        <option value="Weekdays only">Weekdays only</option>
+                        <option value="Weekends only">Weekends only</option>
+                        <option value="Both weekdays and weekends">Both weekdays and weekends</option>
+                        <option value="Flexible">Flexible</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="experience">Years of Experience</label>
+                    <select id="experience" name="experience" required>
+                        <option value="">Select Experience</option>
+                        <option value="0-1">0-1 years</option>
+                        <option value="1-3">1-3 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="5-10">5-10 years</option>
+                        <option value="10+">10+ years</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="qualification">Highest Qualification</label>
+                    <select id="qualification" name="qualification" required>
+                        <option value="">Select Qualification</option>
+                        <option value="HSC">HSC</option>
+                        <option value="Bachelor's Degree">Bachelor's Degree</option>
+                        <option value="Master's Degree">Master's Degree</option>
+                        <option value="PhD">PhD</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="institution">Institution</label>
+                    <input type="text" id="institution" name="institution" placeholder="University/College name">
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="bio">Bio/About Me</label>
+                    <textarea id="bio" name="bio" rows="4" placeholder="Tell students and parents about your teaching style, experience, and what makes you a great tutor..."></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="profile-picture">Profile Picture</label>
+                    <input type="file" id="profile-picture" name="profilePicture" accept="image/*">
+                    <small style="color: #b8c1ec; margin-top: 0.3rem;">Upload a professional photo (JPG, PNG, max 5MB)</small>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="certificates">Certificates/Qualifications</label>
+                    <input type="file" id="certificates" name="certificates" multiple accept=".pdf,.doc,.docx">
+                    <small style="color: #b8c1ec; margin-top: 0.3rem;">Upload relevant certificates (PDF, DOC, max 10MB each)</small>
+                </div>
+                
+                <button type="submit" class="save-button">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabaseClient.js"></script>
+    <script src="../scripts/reports.js"></script>
+    <script src="../scripts/profile.js"></script>
+</body>
+</html>

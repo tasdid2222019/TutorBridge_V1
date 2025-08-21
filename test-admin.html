@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorBridge Admin Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .pass { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .fail { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <h1>TutorBridge Admin Dashboard Test</h1>
+    <div id="test-results"></div>
+
+    <script src="scripts/supabaseClient.js"></script>
+    <script src="scripts/mockData.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/admin-data.js"></script>
+    <script>
+        const results = document.getElementById('test-results');
+        
+        function addResult(test, status, message) {
+            const div = document.createElement('div');
+            div.className = `test-result ${status}`;
+            div.innerHTML = `<strong>${test}:</strong> ${message}`;
+            results.appendChild(div);
+        }
+
+        // Test 1: Check if mock data is loaded
+        setTimeout(() => {
+            addResult('Mock Data Loading', 
+                window.mockUsers ? 'pass' : 'fail',
+                window.mockUsers ? `Loaded ${window.mockUsers.length} users` : 'Mock users not found'
+            );
+
+            addResult('Mock Requests Loading', 
+                window.mockRequests ? 'pass' : 'fail',
+                window.mockRequests ? `Loaded ${window.mockRequests.length} requests` : 'Mock requests not found'
+            );
+
+            addResult('Mock Reports Loading', 
+                window.mockReports ? 'pass' : 'fail',
+                window.mockReports ? `Loaded ${window.mockReports.length} reports` : 'Mock reports not found'
+            );
+
+            // Test 2: Check auth functions
+            addResult('Auth Module Loading', 
+                window.auth ? 'pass' : 'fail',
+                window.auth ? 'Auth module loaded successfully' : 'Auth module not found'
+            );
+
+            // Test 3: Check Supabase client
+            addResult('Supabase Client', 
+                window.getSupabaseClient ? 'pass' : 'fail',
+                window.getSupabaseClient ? 'Supabase client functions available' : 'Supabase client not found'
+            );
+
+            // Test 4: Check AdminData module
+            addResult('AdminData Module', 
+                window.AdminData ? 'pass' : 'fail',
+                window.AdminData ? 'AdminData module loaded successfully' : 'AdminData module not found'
+            );
+
+            // Test 5: Test mock authentication
+            try {
+                // Set up mock admin user
+                sessionStorage.setItem('currentUser', JSON.stringify({
+                    id: 'admin-1',
+                    email: 'admin@tutorbridge.com',
+                    role: 'admin',
+                    name: 'Admin User',
+                    status: 'active'
+                }));
+
+                const isAdmin = window.auth?.isAdmin();
+                addResult('Mock Admin Authentication', 
+                    isAdmin ? 'pass' : 'fail',
+                    isAdmin ? 'Admin authentication working' : 'Admin authentication failed'
+                );
+            } catch (error) {
+                addResult('Mock Admin Authentication', 'fail', `Error: ${error.message}`);
+            }
+
+            // Test 6: Test data fetching with fallback
+            if (window.AdminData) {
+                window.AdminData.fetchUsers().then(users => {
+                    addResult('User Data Fetching', 
+                        users && users.length > 0 ? 'pass' : 'fail',
+                        users ? `Fetched ${users.length} users` : 'No users fetched'
+                    );
+                }).catch(error => {
+                    addResult('User Data Fetching', 'fail', `Error: ${error.message}`);
+                });
+            }
+
+            addResult('Test Complete', 'info', 'All tests completed. Check results above.');
+        }, 1000);
+    </script>
+</body>
+</html>

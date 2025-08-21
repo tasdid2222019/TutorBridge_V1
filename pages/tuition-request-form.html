@@ -87,20 +87,21 @@
 <body>
     <div class="request-container">
         <h2>Post Tuition Request</h2>
-        <form class="request-form" action="#" method="post" onsubmit="return validateRequestForm()">
+        <form id="tuition-request-form" 
+            class="request-form" action="#" method="post" onsubmit="return validateRequestForm()">
             <label for="student-name">Student Name</label>
             <input type="text" id="student-name" name="student_name" required placeholder="Enter student's name">
 
             <label for="curriculum">Student's Curriculum</label>
-            <select id="curriculum" name="curriculum" required style="color: #111; background: #fff;">
+            <select id="curriculum" name="curriculum" required class="curriculum-select">
                 <option value="" disabled selected hidden>Select curriculum</option>
                 <option value="English Medium">English Medium</option>
                 <option value="English Version">English Version</option>
                 <option value="Bangla Medium">Bangla Medium</option>
             </select>
 
-            <label for="class">Class</label>
-            <input type="text" id="class" name="class" required placeholder="e.g. Grade 10">
+            <label for="classLevel">Class</label>
+            <input type="text" id="classLevel" name="classLevel" required placeholder="e.g. Grade 10">
 
             <label for="subject">Subject</label>
             <input type="text" id="subject" name="subject" required placeholder="e.g. Mathematics">
@@ -160,5 +161,10 @@
             return true;
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabaseClient.js"></script>
+    <script src="../scripts/tuition-request-form.js"></script>
+    
+
 </body>
 </html> 

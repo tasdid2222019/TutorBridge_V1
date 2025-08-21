@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Profile - TutorBridge</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutor-profile.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Tutor<span>Bridge</span></div>
+        <nav class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="find-tutors.html">Find Tutors</a>
+            <a href="tuition-request-form.html">Post Tuition Request</a>
+            <a href="../index.html#how-it-works">How It Works</a>
+            <a href="admin-dashboard.html" class="admin-link">Admin</a>
+        </nav>
+        <button class="sign-in-btn" onclick="window.location.href='login.html'">Sign In</button>
+    </header>
+
+    <main class="tutor-profile-container">
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading tutor profile...</p>
+        </div>
+        
+        <div id="tutor-profile" class="tutor-profile hidden">
+            <div class="profile-header">
+                <div class="profile-image-section">
+                    <img id="tutor-image" src="" alt="Tutor Profile" class="tutor-profile-image">
+                </div>
+                <div class="profile-info">
+                    <h1 id="tutor-name" class="tutor-name"></h1>
+                    <p id="tutor-subject" class="tutor-subject"></p>
+                    <p id="tutor-location" class="tutor-location">📍 <span></span></p>
+                    <div id="tutor-rating" class="tutor-rating">
+                        <span class="stars"></span>
+                        <span class="rating-text"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-section">
+                    <h2>About Me</h2>
+                    <p id="tutor-bio" class="tutor-bio"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h2>Subjects & Expertise</h2>
+                    <div id="tutor-expertise" class="tutor-expertise"></div>
+                </div>
+
+                <div class="profile-section">
+                    <h2>Education & Experience</h2>
+                    <div id="tutor-education" class="tutor-education"></div>
+                </div>
+
+                <div class="profile-section">
+                    <h2>Teaching Style</h2>
+                    <p id="tutor-teaching-style" class="tutor-teaching-style"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h2>Availability</h2>
+                    <div id="tutor-availability" class="tutor-availability"></div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="contact-btn">Contact Tutor</button>
+                <button class="book-session-btn">Book a Session</button>
+            </div>
+        </div>
+
+        <div id="tutor-not-found" class="tutor-not-found hidden">
+            <h2>Tutor Not Found</h2>
+            <p>The tutor you're looking for doesn't exist or has been removed.</p>
+            <button class="back-to-search-btn" onclick="window.location.href='find-tutors.html'">Back to Search</button>
+        </div>
+    </main>
+
+    <footer class="cta-footer">
+        <span>Ready to start your learning journey?</span>
+        <button class="signup-student" onclick="window.location.href='signup.html'">Sign up as Student</button>
+        <button class="register-tutor" onclick="window.location.href='signup.html'">Register as Tutor</button> 
+    </footer>
+    
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-logo">Tutor<span>Bridge</span></span>
+                <div class="footer-copy">&copy; 2024 TutorBridge. All rights reserved.</div>
+            </div>
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="find-tutors.html">Find Tutors</a>
+                <a href="tuition-request-form.html">Post Tuition Request</a>
+                <a href="../index.html#how-it-works">How It Works</a>
+            </div>
+            <div class="footer-social">
+                <!-- Facebook -->
+                <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Visit our Facebook page" class="footer-social-icon facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22 12A10 10 0 1 0 11.5 22V15H9v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.3.2 2.3.2v2.6h-1.3c-1.3 0-1.7.8-1.7 1.6V12H17l-.5 3h-2.3v7A10 10 0 0 0 22 12z"/>
+                    </svg>
+                </a>
+                <!-- Twitter/X -->
+                <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Visit our Twitter profile" class="footer-social-icon twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22 5.92c-.77.34-1.6.57-2.46.68a4.27 4.27 0 0 0 1.88-2.37 8.53 8.53 0 0 1-2.7 1.03A4.25 4.25 0 0 0 16 4a4.27 4.27 0 0 0-4.27 4.27c0 .34.04.67.11.98A12.12 12.05 0 0 1 3.14 5.1a4.27 4.27 0 0 0 1.32 5.7 4.22 4.22 0 0 1-1.93-.53v.05a4.27 4.27 0 0 0 3.43 4.18 4.3 4.3 0 0 1-1.92.07 4.27 4.27 0 0 0 3.99 2.96A8.54 8.54 0 0 1 2 19.54 12.05 12.05 0 0 0 8.29 21c7.55 0 11.68-6.25 11.68-11.68l-.01-.53A8.34 8.34 0 0 0 22 5.92z"/>
+                    </svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="Visit our LinkedIn page" class="footer-social-icon linkedin">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.09 20H3.9V9h3.19v11zM5.5 7.68c-1.03 0-1.86-.83-1.86-1.86S4.47 3.96 5.5 3.96c1.03 0 1.86.83 1.86 1.86S6.53 7.68 5.5 7.68zM20.1 20h-3.19v-5.36c0-1.28-.03-2.92-1.78-2.92-1.78 0-2.06 1.39-2.06 2.83V20h-3.19V9h3.06v1.51h.04c.43-.82 1.48-1.68 3.04-1.68 3.25 0 3.85 2.14 3.85 4.92V20z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabaseClient.js"></script>
+    <script src="../scripts/tutor-profile.js"></script>
+
+    <style>
+    .main-footer {
+        background: linear-gradient(90deg, #232946 60%, #5ce1e6 100%);
+        color: #eaeaea;
+        padding: 1.2rem 2rem 0.7rem 2rem;
+        font-size: 1rem;
+        border-radius: 0 0 18px 18px;
+        box-shadow: 0 -2px 16px #5ce1e633;
+        margin-top: 0.5rem;
+    }
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    .footer-logo {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #5ce1e6;
+    }
+    .footer-logo span {
+        color: #b8c1ec;
+    }
+    .footer-copy {
+        font-size: 0.95rem;
+        color: #b8c1ec;
+        margin-top: 0.3rem;
+    }
+    .footer-links {
+        display: flex;
+        gap: 1.2rem;
+    }
+    .footer-links a {
+        color: #eaeaea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .footer-links a:hover {
+        color: #5ce1e6;
+    }
+    .footer-social {
+        display: flex;
+        gap: 0.7rem;
+    }
+    .footer-social-icon {
+        font-size: 1.3rem;
+        color: #b8c1ec;
+        text-decoration: none;
+        transition: color 0.2s, transform 0.2s;
+    }
+    .footer-social-icon:hover {
+        color: #5ce1e6;
+        transform: scale(1.15);
+    }
+    @media (max-width: 700px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.7rem;
+        }
+        .main-footer {
+            padding: 1.2rem 1rem 0.7rem 1rem;
+        }
+    }
+    </style>
+</body>
+</html> 
